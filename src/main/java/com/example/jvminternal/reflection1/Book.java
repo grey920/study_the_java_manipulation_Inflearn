@@ -1,16 +1,22 @@
 package com.example.jvminternal.reflection1;
 
+import com.example.jvminternal.annotation.MyAnnotation;
+
+@MyAnnotation("grey")
 public class Book {
 
     private static String B = "BOOK";
 
     private static final String C = "BOOK";
+
+    @MyAnnotation
     private String a = "a";
 
     public String d = "d";
 
     protected String e = "e";
 
+    @MyAnnotation
     public Book () {
     }
 

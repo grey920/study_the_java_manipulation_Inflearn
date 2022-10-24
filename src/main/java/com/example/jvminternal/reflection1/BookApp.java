@@ -4,9 +4,9 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 /**
- * 패키지 내 다른 클래스들에 접근하려면 Class가 있어야 함
+ * 패키지 내 다른 클래스들에 접근하려면 Class<T>가 있어야 함
  *
- * [클래스 인스턴스에 접근하는 방법]
+ * [클래스 인스턴스 Class<T>에 접근하는 방법]
  * 1. 타입을 통해 .class로 Class<type>으로 가져오는 방법
  * 2. 인스턴스를 통해 인스턴스.getClass()로 가져오는 방법
  * 3. FQCN 문자열밖에 모르는 경우 -> Class.forName("FQCN");
