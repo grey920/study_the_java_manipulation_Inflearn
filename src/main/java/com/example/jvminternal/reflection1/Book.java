@@ -2,39 +2,36 @@ package com.example.jvminternal.reflection1;
 
 import com.example.jvminternal.annotation.MyAnnotation;
 
-@MyAnnotation("grey")
+import java.util.Arrays;
+
 public class Book {
+    public static String A = "A";
 
-    private static String B = "BOOK";
+    private String B = "B";
 
-    private static final String C = "BOOK";
-
-    @MyAnnotation
-    private String a = "a";
-
-    public String d = "d";
-
-    protected String e = "e";
-
-    @MyAnnotation
     public Book () {
     }
 
-    public Book ( String a, String d, String e ) {
-        this.a = a;
-        this.d = d;
-        this.e = e;
+    public Book ( String b ) {
+        B = b;
     }
 
-    private void f(){
-        System.out.println( "F");
+    private void c() {
+        System.out.println( "C" );
     }
 
-    public void g(){
-        System.out.println( "g" );
+    public int sum ( int left, int right ) {
+        return left + right;
     }
 
-    public int h(){
-        return 100;
+    /**
+     * three dots parameter
+     * see [Arbitrary Number of Arguments] section
+     * https://docs.oracle.com/javase/tutorial/java/javaOO/arguments.html#varargs
+     * @param ints
+     * @return
+     */
+    public int sum2 ( int ... ints ) {
+        return Arrays.stream( ints ).sum();
     }
 }

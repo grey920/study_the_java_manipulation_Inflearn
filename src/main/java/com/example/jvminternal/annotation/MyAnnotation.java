@@ -18,7 +18,7 @@ import java.lang.annotation.*;
  *  기본적으로 상속받은 객체는 부모의 애노테이션이 적용되지 않는다.
  *  부모의 애노테이션도 함께 적용되게 하려면 @Inherited를 붙인다.
  */
-@Retention( RetentionPolicy.RUNTIME ) // 해당 애노테이션을 언제까지 유지할 지 설정
+@Retention( RetentionPolicy.SOURCE ) // 해당 애노테이션을 언제까지 유지할 지 설정
 @Target( {ElementType.TYPE , ElementType.FIELD , ElementType.CONSTRUCTOR }) // 해당 애노테이션을 붙일 위치를 지정
 @Inherited // 상속받은 객체들도 해당 애노테이션을 사용하게 하려면 지정
 public @interface MyAnnotation {
@@ -27,6 +27,5 @@ public @interface MyAnnotation {
     String name() default "grey";
 
     int number() default 100;
-
 
 }
