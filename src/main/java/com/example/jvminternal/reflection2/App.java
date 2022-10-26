@@ -12,6 +12,10 @@ public class App {
     public static void main ( String[] args ) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchFieldException {
         Class<?> bookClass = Class.forName( "com.example.jvminternal.reflection1.Book" );
 
+        // https://www.geeksforgeeks.org/new-operator-vs-newinstance-method-java/
+        Book book1 = new Book();
+        System.out.println( "book1 = " + book1 );
+
         // 기본 생성자
         Constructor<?> constructor = bookClass.getConstructor( null );
         Book book = ( Book ) constructor.newInstance();
