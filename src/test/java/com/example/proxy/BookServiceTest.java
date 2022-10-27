@@ -26,8 +26,8 @@ public class BookServiceTest {
      *
      * @return Object. 하지만 이 프록시가 어떤 인터페이스의 구현체인지 명시했기 때문에 casting이 가능하다
      */
-    BookService bookService = ( BookService ) Proxy.newProxyInstance( BookService.class.getClassLoader(), new Class[]{ BookService.class }, new InvocationHandler() {
-        BookService bookService = new DefaultBookService();
+    DefaultBookService bookService = ( DefaultBookService ) Proxy.newProxyInstance( BookService.class.getClassLoader(), new Class[]{ DefaultBookService.class }, new InvocationHandler() {
+        DefaultBookService bookService = new DefaultBookService();
         @Override
         public Object invoke ( Object proxy, Method method, Object[] args ) throws Throwable {
             // 만약 메소드가 엄청 많고 그 중에 몇몇개만 적용하고 싶다면?? -> 여기에서 분기처리를 다 해주거나 InvocationHandler를 감싸는 프록시를 또 만들거나.. InvocationHandler가 유연하지 못하다
