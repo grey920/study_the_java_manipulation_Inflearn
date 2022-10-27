@@ -31,4 +31,9 @@ public class BookServiceProxy implements BookService {
         log.info( "종료시간 : {}", e );
         System.out.println( e - s / 1000000000 + "초 걸림");
     }
+
+    @Override
+    public void returnBook ( Book book ) {
+        bookService.returnBook( book );
+    }
 }
