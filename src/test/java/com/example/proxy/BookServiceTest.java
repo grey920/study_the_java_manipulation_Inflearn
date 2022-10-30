@@ -1,10 +1,9 @@
 package com.example.proxy;
 
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -26,8 +25,8 @@ public class BookServiceTest {
      *
      * @return Object. 하지만 이 프록시가 어떤 인터페이스의 구현체인지 명시했기 때문에 casting이 가능하다
      */
-    DefaultBookService bookService = ( DefaultBookService ) Proxy.newProxyInstance( BookService.class.getClassLoader(), new Class[]{ DefaultBookService.class }, new InvocationHandler() {
-        DefaultBookService bookService = new DefaultBookService();
+    BookService bookService = ( BookService ) Proxy.newProxyInstance( BookService.class.getClassLoader(), new Class[]{ BookService.class }, new InvocationHandler() {
+        BookService bookService = new DefaultBookService();
         @Override
         public Object invoke ( Object proxy, Method method, Object[] args ) throws Throwable {
             // 만약 메소드가 엄청 많고 그 중에 몇몇개만 적용하고 싶다면?? -> 여기에서 분기처리를 다 해주거나 InvocationHandler를 감싸는 프록시를 또 만들거나.. InvocationHandler가 유연하지 못하다
@@ -48,11 +47,41 @@ public class BookServiceTest {
 
     @Test
     public void di(){
+
         Book book = new Book();
         book.setTitle( "spring" );
         bookService.rent( book );
 
         bookService.returnBook( book );
+    }
+
+    // ============================ Class에도 적용할 수 있는 CGlib ==========>
+
+    /**
+     * handler : jdk 동적 프록시에서 InvocationHandler를 사용한 것처럼 cglib에서도 handler를 사용해야 한다.
+     */
+    @Test
+    public void di_cglib(){
+
+        MethodInterceptor handler = new MethodInterceptor() {
+            com.example.cglib.BookService bookservice = new com.example.cglib.BookService();
+            @Override
+            public Object intercept ( Object o, Method method, Object[] args, MethodProxy methodProxy ) throws Throwable {
+                System.out.println("aaaaaa");
+                Object invoke = method.invoke( bookservice, args );
+                System.out.println("bbbbbbb");
+                return invoke;
+            }
+        };
+        com.example.cglib.BookService bookservice = ( com.example.cglib.BookService ) Enhancer.create( com.example.cglib.BookService.class, handler );
+
+
+        com.example.cglib.Book book = new com.example.cglib.Book();
+
+        book.setTitle( "spring" );
+        bookservice.rent( book );
+
+        bookservice.returnBook( book );
     }
 
 
